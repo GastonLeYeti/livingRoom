@@ -1,0 +1,473 @@
+//variables
+$background-color: rgb(234, 234, 235)
+$sky-color: rgb(153, 192, 200)
+$cloud-color: rgb(251, 251, 253)
+
+$border-color: rgb(22, 71, 92)
+
+$marron-color: rgb(161, 109, 94)
+$marron_lighten-color: rgb(202, 168, 133)
+
+$bleu-color: rgb(149,192,211)
+$bleu_lighten-color: rgb(179,207,221)
+$bleu_darken-color: rgb(107,152,172)
+
+$grey-color: rgb(199,198,198)
+$grey_lighten-color: rgb(226,226,224)
+$grey_darken-color: rgb(159,160,166)
+
+$red-color: rgb(224,116,102)
+$red_lighten-color: rgb(241,148,125)
+$red_darken-color: rgb(240, 100, 109)
+
+$yellow-color: rgb(250, 232, 191)
+$yellow_lighten-color: rgb(255,237,212)
+$yellow_darken-color: rgb(255,207,147)
+
+$green-color: rgb(101,196,94)
+$green_darken-color: rgb(71,175,65)
+
+
+//mixins
+=bg-degrad_3($color_1, $color_2, $color_3)
+  background: $color_2
+  background: -moz-linear-gradient(left, $color_1 25%, $color_2 28%, $color_2 75%, $color_3 78%, $color_3 75%)
+  background: -webkit-linear-gradient(left, $color_1 25%, $color_2 28%, $color_2 75%, $color_3 78%, $color_3 75%)
+  background: linear-gradient(to right, $color_1 25%, $color_2 28%, $color_2 75%, $color_3 78%, $color_3 75%)
+  
+  
+=bg-to-transparent($color_1)
+  background: -moz-linear-gradient(top, $color_1 0%, rgba(255,255,255,0) 100%)
+  background: -webkit-linear-gradient(top, $color_1 0%,rgba(255,255,255,0) 100%)
+  background: linear-gradient(to bottom, $color_1 0%,rgba(255,255,255,0) 100%)
+  
+=bg-couch
+  background: $bleu-color
+  background: -moz-linear-gradient(top, $bleu_lighten-color 14%, $bleu-color 15%, $bleu-color 90%, $bleu_darken-color 91%, $bleu_darken-color 91%); 
+  background: -webkit-linear-gradient(top, $bleu_lighten-color 14%, $bleu-color 15%, $bleu-color 90%,$bleu_darken-color 91%,$bleu_darken-color 91%); 
+  background: linear-gradient(to bottom, $bleu_lighten-color 14%, $bleu-color 15%, $bleu-color 90%,$bleu_darken-color 91%,$bleu_darken-color 91%); 
+  
+  
+=bg-couch_foot
+  background: $marron-color
+  background: -moz-linear-gradient(left, $marron_lighten-color 14%, $marron-color 15%, $marron-color 90%); 
+  background: -webkit-linear-gradient(left, $marron_lighten-color 14%, $marron-color 15%, $marron-color 90%); 
+  background: linear-gradient(to right, $marron_lighten-color 14%, $marron-color 15%, $marron-color 90%); 
+  
+  
+  
+=timing_ceaser($timinig)
+  -webkit-transition: all $timinig cubic-bezier(0.645, 0.275, 0.300, 1)
+  -webkit-transition: all $timinig cubic-bezier(0.645, 0.275, 0.300, 1.405)
+  transition:         all $timinig cubic-bezier(0.645, 0.275, 0.300, 1.405)
+  
+=border()
+  border: 4px solid $border-color
+  
+=full_border-radius($radius)
+  -webkit-border-radius: $radius
+  border-radius:         $radius
+  
+=border-radius($radius_1,$radius_2,$radius_3,$radius_4)
+  -webkit-border-radius: $radius_1 $radius_2 $radius_3 $radius_4
+  border-radius:         $radius_1 $radius_2 $radius_3 $radius_4
+
+=transform($transforms)
+  -webkit-transform: $transforms
+  transform:         $transforms
+
+=rotate ($deg) 
+    @include transform(rotate(#{$deg}deg))
+
+=scale($scale)
+    @include transform(scale($scale))
+
+=translate ($x, $y, $z)
+    @include transform(translate3d($x, $y, $z))
+
+=skew ($x, $y)
+    @include transform(skew(#{$x}deg, #{$y}deg))
+
+=transform-origin ($origin)
+    -webkit-transform-origin: $origin
+    -moz-transform-origin: $origin
+    -ms-transform-origin: $origin
+    transform-origin: $origin
+  
+=box-shadow($bxshdw)
+  -webkit-box-shadow: $bxshdw
+  -moz-box-shadow: $bxshdw
+  box-shadow: $bxshdw
+
+//content
+
+body
+  background-color: $background-color
+
+#content
+  position : absolute
+  height : 400px
+  width : 550px
+  background-color : $background-color
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  
+  div
+    position: absolute
+
+  .floor
+    width : 80%
+    height : 4px
+    top: 80%
+    left: 10%
+    +full_border-radius(2px)
+    background-color: $border-color
+    
+  .lamp_container
+    height: 46%
+    width: 19%
+    top: 35%
+    left: 16%
+    
+    .lamp
+      bottom: 0px
+      left: 0px
+      width: 50px
+      height: 10px
+      +border
+      +border-radius(8px,8px,0px,0px)
+      +bg-degrad_3($grey_darken-color, $grey-color, $grey_lighten-color)
+
+      &:after
+        @extend .lamp
+        position: absolute
+        content: ""
+        top: -28px
+        left: 15px
+        width: 10px
+        height: 20px
+
+    .lampBase
+      @extend .floor
+      top: -145px
+      width: 4px
+      left: 22px
+      height: 120px
+
+      &:after
+        @extend .lampBase
+        position: absolute
+        content: ""
+        +rotate(65)
+        @include transform-origin(50% 63%)
+        @include timing_ceaser(500ms)
+        top: -57px
+        height: 90px
+        left: 0px
+
+      &:before
+        @extend .lampBase
+        position: absolute
+        content: ""
+        @include transform-origin(50% 0%)
+        @include timing_ceaser(500ms)
+        top: -24px
+        height: 35px
+        left: 50px
+        
+    .lampBase.move:after
+        +rotate(85)
+    .lampBase.move:before
+        top: -6px
+        left: 55px
+    .lampBase.moving:before
+        @include rotate(-20)
+
+
+    .light
+      position: absolute
+      top: -144px
+      left: 42px
+      -webkit-transform: perspective(60) rotateX(45deg)
+      @include timing_ceaser(500ms)
+      @include bg-to-transparent(rgba(255, 255, 255, 0.9))
+      margin: 0px auto
+      width: 60px
+      height: 75px
+    .light.move
+      top: -131px
+      left: 47px
+    .light.moving
+      left: 75px
+      -webkit-transform: perspective(60) rotateX(45deg) rotate(-20deg);
+      
+    .lampShade
+      @include transform-origin(50% -50%)
+      @include timing_ceaser(500ms)
+      top: -150px
+      left: 85%
+      width: 50px
+      height: 25px
+      +border
+      +full_border-radius(5px)
+      +bg-degrad_3($yellow_darken-color, $yellow-color, $yellow_lighten-color)
+      
+    .lampShade.move
+      top: -135px
+      left: 95%
+    .lampShade.moving
+      @include rotate(-20)
+        
+        
+        
+  .couch_container
+    width: 50%
+    height: 30%
+    bottom: 20%
+    left: 27%
+    
+    .foot
+      +border
+      +full_border-radius(4px)
+      width: 3%
+      height: 14%
+      bottom: -3%
+      left: 17%
+      +bg-couch_foot
+      
+      &:before
+        @extend .foot
+        position: absolute
+        content: ""
+        width: 100%
+        height: 110%
+        bottom: -4px
+        left: 2030%
+      
+    .seatCouch
+      +border
+      +full_border-radius(4px)
+      width: 70%
+      height: 20%
+      bottom: 15%
+      left: 15%
+      +bg-couch
+      
+      &:before
+        @extend .seatCouch
+        position: absolute
+        content: ""
+        height: 190%
+        bottom: -7px
+        width: 10%
+        left: -16%
+      &:after
+        @extend .seatCouch:before
+        left: 102%
+      
+    .cushions
+      +border
+      +full_border-radius(4px)
+      +box-shadow(0 5px 0px rgba( $bleu_darken-color, .5 ))
+      bottom: 26%
+      width: 34%
+      height: 15%
+      left: 15%
+      +bg-couch
+      
+      &:after
+        @extend .cushions
+        position: absolute
+        content: ""
+        +box-shadow(0 5px 0px rgba( $bleu_darken-color, .5 ))
+        left: 101%
+        height: 100%
+        bottom: -4px
+        width: 100%
+        
+        
+    .couchBackrest
+      +border
+      +full_border-radius(7px)
+      +box-shadow(0 5px 0px rgba( $bleu_darken-color, .5 ))
+      bottom: 26%
+      width: 34%
+      height: 50%
+      left: 15%
+      +bg-couch
+      
+      &:before
+        @extend .couchBackrest
+        position: absolute
+        content: ""
+        left: 101%
+        height: 100%
+        bottom: -4px
+        width: 100%
+      
+      
+  .potSmells_container
+    width: 13%
+    height: 30%
+    bottom: 19%
+    left: 76%
+    
+    .potSmells
+      +border
+      +bg-degrad_3($red_lighten-color, $red-color, $red_darken-color)
+      width: 70%
+      height: 40%
+      bottom: 0
+      left: 10%
+      +border-radius(20%, 20%, 35%, 35%)
+
+    .leaf
+      +border
+      +border-radius(100%, 100%, 30%, 30%)
+      background-color: $green_darken-color
+      top: 20px
+      left: 22px
+      height: 50px
+      width: 20px
+      
+      &:before
+        @extend .leaf
+        @include rotate(20)
+        position: absolute
+        content: ""
+        height: 100%
+        width: 100%
+        background-color: $green-color
+        top: 15%
+        left: 5px  
+        
+      &:after
+        @extend .leaf
+        @include rotate(-20)
+        position: absolute
+        content: ""
+        height: 100%
+        width: 100%
+        background-color: $green-color
+        top: 15%
+        left: -15px  
+	
+  .paintings_container
+    width: 33%
+    height: 29%
+    top: 19%
+    left: 49%
+    
+    .shelf
+      +border
+      +full_border-radius(4px)
+      width: calc(100% - 8px)
+      height: 5%
+      bottom: 0
+      background-color: $marron_lighten-color
+      
+    .first_painting_frame
+      +border
+      +full_border-radius(4px)
+      background-color: #FFFFFF
+      bottom: calc(5% + 4px)
+      height: 50%
+      left: 10%
+      width: 50%
+      
+      .first_painting
+        +border
+        +full_border-radius(4px)
+        height: 70%
+        width: 79%
+        top: calc(16% - 4px)
+        left: calc(11% - 4px)
+        background-color: $bleu-color
+        
+        .montain
+          background-color: $green-color
+          height: 80%
+          width: 80%
+          bottom: 0
+          +border-radius(0, 100%, 0, 0)
+          
+          &:after
+            content: ""
+            position: absolute
+            @extend .montain
+            background-color: $green_darken-color
+            left: 45%
+            +border-radius(100%, 0, 0, 0)
+          
+        .cloud
+          background-color: $grey_lighten-color
+          width: 20%
+          height: 10%
+          top: 8%
+          left: 35%
+          +border-radius(100%, 100%, 100%, 100%)
+          +box-shadow(10px 3px 0 0 $grey_lighten-color)
+          
+          
+    .second_painting_frame
+      +border
+      +full_border-radius(4px)
+      background-color: #FFFFFF
+      bottom: calc(5% + 4px)
+      height: 80%
+      left: 42%
+      width: 41%
+      
+      .second_painting
+        +border
+        +full_border-radius(4px)
+        height: 81%
+        width: 79%
+        top: calc(9% - 4px)
+        left: calc(10% - 3px)
+        background-color: $bleu-color
+        
+        .montain
+          background-color: $green-color
+          height: 80%
+          width: 80%
+          bottom: 0
+          +border-radius(0, 100%, 0, 0)
+          
+          &:after
+            content: ""
+            position: absolute
+            @extend .montain
+            background-color: $green_darken-color
+            left: 45%
+            +border-radius(100%, 0, 0, 0)
+          
+          &:before
+            content: ""
+            position: absolute
+            @extend .montain
+            background-color: $green_darken-color
+            left: 0%
+            height: 48%
+            +border-radius(100%, 100%, 100%, 0)
+          
+        .cloud
+          background-color: $grey_lighten-color
+          width: 20%
+          height: 5%
+          top: 8%
+          left: 5%
+          +border-radius(100%, 100%, 100%, 100%)
+          +box-shadow(10px 3px 0 0 $grey_lighten-color)
+          
+          &:before
+            content: ""
+            position: absolute
+            @extend .cloud
+            height: 100%
+            width: 100%
+            left: 225%
+            top: 90%
+
+    
